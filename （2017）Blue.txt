@@ -1,0 +1,40 @@
+---2017紫金足球
+---蓝队策略
+
+------------------------
+
+---声明
+
+global	i
+global ftop,fbot,gRight,gLeft,fRightX,fLeftX
+global b1,b2,b3,b4,b5,ball
+
+------------------------
+
+---蓝队的策略结构,每秒执行60次
+
+on strategyB
+
+	run(b3)	
+
+end
+
+-------------------------
+
+on run(who)
+  if  i > 120 then
+    velocity(who,75,75) 
+  end if 
+  if i  > 150 then 
+    velocity(b3,75,0) 
+  end if 
+  if i  > 160 then 
+    velocity(b3,0,0) 
+    
+  end if 
+  if i  > 850 then 
+    velocity(b3,125,125) 
+    
+  end if 
+end
+	
