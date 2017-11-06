@@ -5,7 +5,7 @@
 
 ---声明
 
-global	i
+global	jiao
 global ftop,fbot,gRight,gLeft,fRightX,fLeftX
 global b1,b2,b3,b4,b5,ball
 
@@ -15,26 +15,50 @@ global b1,b2,b3,b4,b5,ball
 
 on strategyB
 
-	run(b3)	
+	Goalie1(b1)
 
 end
 
 -------------------------
-
-on run(who)
-  if  i > 120 then
-    velocity(who,75,75) 
+on Goalie1(whichBot)
+  vr = 0
+  vl = 0
+  Z = ball
+  Tx = gRight - Z.x
+  Ty = ftop - Z.y
+  A = whichBot.pos
+  A.x = gRight - A.x
+  A.y = ftop - A.y
+  
+  if A.y > Ty + .9 and A.y > 27 then
+    vr = -100
+    vl = -100
   end if 
-  if i  > 150 then 
-    velocity(b3,75,0) 
-  end if 
-  if i  > 160 then 
-    velocity(b3,0,0) 
+  if A.y < Ty -.9 and A.y < 43 then
+    vr = 100
+    vl =100
     
   end if 
-  if i  > 850 then 
-    velocity(b3,125,125) 
-    
+  if A.y < 27 then
+    vr = 100
+    vl =100
   end if 
+  if A.y >43 then
+    vr = -100
+    vl = -100
+  end if 
+  --------correct rot--------------------
+  tR = whichBot.rot.z 
+  if  tR < .001 then tR = tR + 360
+  if tR >360.001 then tR = tR - 360
+  if tR > 270.5 then 
+    vl = vl + abs(tR - 270)
+  else if tR < 269.5 then 
+    vr = vr + abs(tR - 270)
+  end if 
+  --------------------
+  velocity(whichBot , vl, vr)
 end
-	
+------------------
+
+
